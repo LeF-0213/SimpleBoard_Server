@@ -2,10 +2,15 @@ import * as postRepository from "../repository/post.mjs";
 
 // 모든 포스트를 가져오는 함수(검색 기능 추가)
 export async function getPosts(req, res, next) {
-  const search = req.query.search;
+  let search = req.query.search;
 
-  let data;
+  // URL 디코딩(한글 처리)
   if (search) {
+    search = decodeURIComponent(search);
+    console.log("디코딩된 검색어: ", search);
+  }
+  let data;
+  if (search && search.trim() !== '') {
     data = await postRepository.getAllBySearch(search);
   } else {
     data = await postRepository.getAll();

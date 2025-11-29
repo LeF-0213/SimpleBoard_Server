@@ -22,7 +22,7 @@ export async function getAllByUserid(userid) {
 export async function getAllBySearch(search) {
   return getPosts()
     .find({
-      $or: [{ userid: { $regex: search, $options: "i" } }, { nickanme: { $regex: search, $options: "i" } }],
+      $or: [{ userid: { $regex: search, $options: "i" } }, { nickname: { $regex: search, $options: "i" } }],
     })
     .sort({ createdAt: -1 })
     .toArray();
