@@ -1,9 +1,15 @@
 import * as postRepository from "../repository/post.mjs";
 
-// 모든 포스트를 가져오는 함수
+// 모든 포스트를 가져오는 함수(검색 기능 추가)
 export async function getPosts(req, res, next) {
-  const userid = req.query.userid;
-  const data = await (userid ? postRepository.getAllByUserid(userid) : postRepository.getAll());
+  const search = req.query.search;
+
+  let data;
+  if (search) {
+    data = await postRepository.getAllBySearch(search);
+  } else {
+    data = await postRepository.getAll();
+  }
   res.status(200).json(data);
 }
 
